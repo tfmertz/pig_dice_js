@@ -1,16 +1,5 @@
 function pig_dice(player) {
-  var roll_result = Math.floor(Math.random() * 6) + 1;
-
-  if(roll_result === 1) {
-    //disable buttons function
-    disable(1);
-    enable(2);
-  }
-
-  p1_round += roll_result;
-
-  $("#p1_temp").text(p1_round);
-  $("#current_roll").text(roll_result);
+  
 }
 
 //0 is player 2, 1 is player 1
@@ -25,8 +14,8 @@ function enable(player) {
 
 $(document).ready(function() {
 
-  var p1_score = 0;
-  var p2_score = 0;
+  var p1_score = 99;
+  var p2_score = 99;
 
   var p1_round = 0;
   var p2_round = 0;
@@ -48,7 +37,7 @@ $(document).ready(function() {
 
       $("#p1_temp").text(p1_round);
     }
-      $("#current_roll").text(roll_result);
+    $("#current_roll").text(roll_result);
   });
 
   //PLAYER ONE HOLD
@@ -59,6 +48,12 @@ $(document).ready(function() {
     $("#p1_temp").text(p1_round);
     disable(1);
     enable(2);
+    if(p1_score >= 100) {
+      disable(1);
+      disable(2);
+      $("#current_roll").text("Player 1 wins!");
+      $("#again").show();
+    }
   });
 
   //PLAYER TWO ROLL
@@ -78,7 +73,7 @@ $(document).ready(function() {
 
       $("#p2_temp").text(p2_round);
     }
-      $("#current_roll").text(roll_result);
+    $("#current_roll").text(roll_result);
   });
 
   //PLAYER TWO HOLD
@@ -89,6 +84,24 @@ $(document).ready(function() {
     $("#p2_temp").text(p2_round);
     disable(2);
     enable(1);
+    if(p2_score >= 100){
+      disable(1);
+      disable(2);
+      $("#current_roll").text("Player 2 wins!");
+      $("#again").show();
+    }
   });
+
+  $("#again").click(function() {
+    p1_score = 0;
+    p1_round = 0;
+    p2_score = 0;
+    p2_round = 0;
+    enable(1);
+    $("#again").hide();
+    $("#current_roll").text("");
+  });
+
+
 
 });
